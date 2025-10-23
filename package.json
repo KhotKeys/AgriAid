@@ -1,7 +1,7 @@
 {
   "name": "smart-farm",
   "version": "1.0.0",
-  "description": "A data-driven farming support system for Rhino Refugee Camp",
+  "description": "A data-driven farming support system for Kiryandongo Refugee Camp",
   "main": "frontend/index.html",
   "scripts": {
     "start": "cd frontend && python -m http.server 8000",
@@ -10,8 +10,9 @@
     "test": "echo 'Test process would go here'",
     "deploy": "echo 'Deploy process would go here'"
   },
-    "keywords": [
+  "keywords": [
     "farming",
+    "iot",
     "refugee",
     "agriculture",
     "smart-farming",

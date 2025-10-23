@@ -1,57 +1,67 @@
-# Smart Farm - Empowering Refugee Farmers
+# **Käkedom Tools - Empowering Refugee Farmers**
 
-A data-driven farming support system designed specifically for the Rhino Refugee Camp community. This project addresses the agricultural challenges faced by refugee farmers through accessible technology and smart monitoring solutions.
+A **data-driven farming support system** designed specifically for the **Kiryandongo Refugee Camp** community. This project addresses the agricultural challenges faced by refugee farmers through **accessible technology** and **smart monitoring solutions**.
 
-## 🌱 Project Overview
+## 🌱 **Project Overview**
 
-Growing up in the refugee community, I witnessed the challenges farmers face in Rhino Refugee Camp. Limited access to soil health information, weather patterns, and farming knowledge leads to low crop production and food insecurity. This system provides comprehensive solutions to these challenges.
+Growing up in the refugee community, I witnessed the challenges farmers face in **Kiryandongo Refugee Camp**. Limited access to **soil health information**, **weather patterns**, and **farming knowledge** leads to low crop production and food insecurity. **Käkedom Tools** provides comprehensive solutions to these challenges.
 
-## 🎯 Key Features
+## 🎯 **Key Features**
 
-### 1. Soil & Weather Monitoring
-- Real-time monitoring of soil health, moisture levels, and pH
-- Weather forecast updates
-- Crop suitability recommendations based on current conditions
+### 1. **Soil & Weather Monitoring**
 
-### 2. Yield Prediction Tool
-- AI-powered crop yield predictions
-- Data-driven forecasting based on environmental conditions
-- Helps farmers plan for food needs and potential sales
+* **Real-time monitoring** of soil health, moisture levels, and pH
+* **Weather forecast updates**
+* **Crop suitability recommendations** based on current conditions
 
-### 3. Water Management Support
-- Smart water monitoring using satellite data
-- Targeted irrigation recommendations
-- Water conservation optimization
+### 2. **Yield Prediction Tool**
 
-### 4. Learning Platform
-- Access to farming guides and tutorials
-- Best practices for sustainable agriculture
-- Pest control and soil improvement techniques
+* **AI-powered crop yield predictions**
+* **Data-driven forecasting** based on environmental conditions
+* Helps farmers **plan for food needs** and potential sales
 
-### 5. Resource Sharing Dashboard
-- Community tool and seed sharing
-- Equitable resource distribution
-- Performance tracking for farmers
+### 3. **Water Management Support**
 
-### 6. Seed Bank & Trading Platform
-- Community seed bank management
-- High-quality seed access
-- Trading and borrowing system
+* **Smart water monitoring** using satellite data
+* **Targeted irrigation recommendations**
+* **Water conservation optimization**
 
-## 🚀 Getting Started
+### 4. **Learning Platform**
 
-### Prerequisites
-- Modern web browser (Chrome, Firefox, Safari, Edge)
-- Internet connection for real-time data updates
+* **Access to farming guides and tutorials**
+* **Best practices for sustainable agriculture**
+* **Pest control and soil improvement techniques**
 
-### Installation
-1. Clone the repository:
+### 5. **Resource Sharing Dashboard**
+
+* **Community tool and seed sharing**
+* **Equitable resource distribution**
+* **Performance tracking for farmers**
+
+### 6. **Seed Bank & Trading Platform**
+
+* **Community seed bank management**
+* **High-quality seed access**
+* **Trading and borrowing system**
+
+## 🚀 **Getting Started**
+
+### **Prerequisites**
+
+* **Modern web browser** (Chrome, Firefox, Safari, Edge)
+* **Internet connection** for real-time data updates
+
+### **Installation**
+
+1. **Clone the repository**:
+
 ```bash
-git clone https://github.com/yourusername/smart-farm.git
-cd smart-farm
+git clone https://github.com/yourusername/kakedom-tools.git
+cd kakedom-tools
 ```
 
-2. Open the project in your browser:
+2. **Open the project in your browser**:
+
 ```bash
 # Navigate to the frontend folder
 cd frontend
@@ -62,144 +72,148 @@ python -m http.server 8000
 # Then visit http://localhost:8000
 ```
 
-## 📱 Pages Overview
+## 📱 **Pages Overview**
 
-### Landing Page (`index.html`)
-- Project introduction and features
-- Impact statistics
-- Contact information
-- Navigation to login/signup
+### **Landing Page** (`index.html`)
 
-### Authentication
-- **Login Page** (`login.html`): User and admin login
-- **Signup Page** (`signup.html`): New farmer registration
+* **Project introduction and features**
+* **Impact statistics**
+* **Contact information**
+* **Navigation to login/signup**
 
-### Dashboards
-- **User Dashboard** (`user-dashboard.html`): Farmer interface with community observations and learning tools
-- **Admin Dashboard** (`admin-dashboard.html`): System administration and analytics
+### **Authentication**
 
-## 🎨 Design Features
+* **Login Page** (`login.html`): User and admin login
+* **Signup Page** (`signup.html`): New farmer registration
 
-### Color Scheme
-Organic Earth Palette (Local Farming / Community Platform)
+### **Dashboards**
 
-Use when: You focus on farmer collaboration, education, or sustainability.
+* **User Dashboard** (`user-dashboard.html`): Farmer interface with IoT data
+* **Admin Dashboard** (`admin-dashboard.html`): System administration and analytics
 
-🌿 Primary: Forest Green #388E3C
+## 🎨 **Design Features**
 
-🧡 Accent: Burnt Orange #EF6C00
+### **Color Scheme**
 
-🤎 Support: Soil Brown #6D4C41
+* **Primary Green**: #2E7D32 (Deep forest green)
+* **Secondary Green**: #4CAF50 (Medium green)
+* **Light Green**: #81C784 (Light green)
+* **Dark Green**: #1B5E20 (Dark green)
+* **Earth Brown**: #8D6E63 (Natural brown)
 
-🌤 Secondary: Light Cream #FFF8E1
+### **Responsive Design**
 
-⚪ Neutral: White #FFFFFF
+* **Mobile-first approach**
+* **Tablet and desktop optimized**
+* **Touch-friendly interface**
 
-A warm, human-centered palette that reflects real soil and sunlight.
-- **Earth Brown**: #8D6E63 (Natural brown)
+## 🔧 **Technical Implementation**
 
-### Responsive Design
-- Mobile-first approach
-- Tablet and desktop optimized
-- Touch-friendly interface
+### **Frontend Technologies**
 
-## 🔧 Technical Implementation
+* **HTML5**: Semantic markup
+* **CSS3**: Modern styling with Flexbox and Grid
+* **JavaScript**: Interactive functionality
+* **Chart.js**: Data visualization
+* **Font Awesome**: Icons
 
-### Frontend Technologies
-- **HTML5**: Semantic markup
-- **CSS3**: Modern styling with Flexbox and Grid
-- **JavaScript**: Interactive functionality
-- **Chart.js**: Data visualization
-- **Font Awesome**: Icons
+### **Key Features**
 
--### Key Features
-- Demo observation data simulation (optional for demos; sensor hardware not required)
-- Interactive charts and graphs
-- Form validation
-- Responsive navigation
-- Smooth animations
+* **Real-time IoT data simulation**
+* **Interactive charts and graphs**
+* **Form validation**
+* **Responsive navigation**
+* **Smooth animations**
 
-## 📊 Data Simulation (optional)
+## 📊 **IoT Data Integration**
 
-The system can simulate real-time data for demonstration purposes; sensor hardware is optional. Example simulated metrics include:
-- **Soil pH**: 6.0 - 7.5 range
-- **Soil Moisture**: 50% - 80% range
-- **Temperature**: 20°C - 35°C range
-- **Humidity**: 60% - 90% range
+The system simulates **real-time data** from IoT sensors including:
 
-## 👥 User Types
+* **Soil pH**: 6.0 - 7.5 range
+* **Soil Moisture**: 50% - 80% range
+* **Temperature**: 20°C - 35°C range
+* **Humidity**: 60% - 90% range
 
-### Farmers
-- Access to personal farming dashboard
-- Real-time soil and weather data
-- Yield predictions
-- Learning resources
-- Community tools
+## 👥 **User Types**
 
-### Administrators
-- User management
-- System analytics
-- Performance monitoring
-- Resource allocation
-- System settings
+### **Farmers**
 
-## 🌍 Community Impact
+* **Access to personal farming dashboard**
+* **Real-time soil and weather data**
+* **Yield predictions**
+* **Learning resources**
+* **Community tools**
 
-### Expected Benefits
-- **85% reduction** in crop failures
-- **60% improvement** in water conservation
-- **40% increase** in crop yields
-- **100% community access** to essential tools
+### **Administrators**
 
-### Long-term Goals
-- Food self-sufficiency
-- Reduced dependency on external aid
-- Sustainable farming practices
-- Community resilience
+* **User management**
+* **System analytics**
+* **Performance monitoring**
+* **Resource allocation**
+* **System settings**
 
-## 🔮 Future Enhancements
+## 🌍 **Community Impact**
 
-### Planned Features
-- Mobile app development
-- Advanced AI predictions
-- Satellite imagery integration
-- Weather station network
-- Community marketplace
+### **Expected Benefits**
 
-### Technical Improvements
-- Backend API development
-- Database integration
-- Optional demo sensor connectivity for advanced setups
-- Machine learning models
-- Cloud deployment
+* **85% reduction** in crop failures
+* **60% improvement** in water conservation
+* **40% increase** in crop yields
+* **100% community access** to essential tools
 
-## 🤝 Contributing
+### **Long-term Goals**
 
-We welcome contributions to improve the Smart Farm system:
+* **Food self-sufficiency**
+* **Reduced dependency on external aid**
+* **Sustainable farming practices**
+* **Community resilience**
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+## 🔮 **Future Enhancements**
 
-## 📞 Contact
+### **Planned Features**
 
-- **Email**: info@smartfarm.org
-- **Location**: Rhino Refugee Camp, Uganda
-- **Project**: Smart Farm - Empowering Refugee Farmers
+* **Mobile app development**
+* **Advanced AI predictions**
+* **Satellite imagery integration**
+* **Weather station network**
+* **Community marketplace**
 
-## 📄 License
+### **Technical Improvements**
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+* **Backend API development**
+* **Database integration**
+* **Real IoT sensor connectivity**
+* **Machine learning models**
+* **Cloud deployment**
 
-## 🙏 Acknowledgments
+## 🤝 **Contributing**
 
-- Rhino Refugee Camp community
-- Local farmers and agricultural experts
-- Technology partners and supporters
-- Open source community
+We welcome contributions to improve **Käkedom Tools**:
+
+1. **Fork the repository**
+2. **Create a feature branch**
+3. **Make your changes**
+4. **Test thoroughly**
+5. **Submit a pull request**
+
+## 📞 **Contact**
+
+* **Email**: [info@kakedomtools.org](mailto:info@kakedomtools.org)
+* **Location**: **Kiryandongo Refugee Camp, Uganda**
+* **Project**: **Käkedom Tools - Empowering Refugee Farmers**
+
+## 📄 **License**
+
+This project is licensed under the **MIT License** - see the LICENSE file for details.
+
+## 🙏 **Acknowledgments**
+
+* **Kiryandongo Refugee Camp community**
+* **Local farmers and agricultural experts**
+* **Technology partners and supporters**
+* **Open source community**
 
 ---
 
-**Smart Farm** - Building a sustainable future for refugee farmers through technology and community support. 
+**Käkedom Tools** - **Building a sustainable future for refugee farmers through technology and community support.**
+

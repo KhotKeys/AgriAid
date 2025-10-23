@@ -1,4 +1,4 @@
-import firebaseService, { auth, db, realTimeDb } from './firebase-init.js';
+import { auth, db, realTimeDb } from './firebase-config.js';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -6,16 +6,15 @@ import {
     signOut,
     setPersistence,
     browserLocalPersistence
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 import {
     doc,
     setDoc,
     getDoc,
     collection,
     onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-import { serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 const currentPath = window.location.pathname;
 
@@ -89,42 +88,31 @@ function initSignupPage() {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Basic client validation
-            if (!firstName || !lastName || !email || !phone || !location || !role || !password || !confirmPassword) return alert('Please fill in all fields');
-            if (password !== confirmPassword) return alert('Passwords do not match.');
+            if (password !== confirmPassword) return alert("Passwords do not match.");
             if (!role) return alert('Please select a role.');
-
-            // If page provides validatePassword (signup.html), use it
-            try {
-                if (typeof validatePassword === 'function') {
-                    const ok = validatePassword(password);
-                    if (!ok) return alert('Please ensure your password meets all requirements');
-                }
-            } catch (err) {
-                console.warn('validatePassword check failed:', err);
-            }
-
-            const loadingBtn = document.querySelector('#signupForm .auth-btn');
-            if (loadingBtn) { loadingBtn.textContent = 'Creating Account...'; loadingBtn.disabled = true; }
+            if (password.length < 6) return alert("Password must be at least 6 characters long.");
 
             try {
-                const { signupWithProfile } = await import('./auth-service.js');
-                await signupWithProfile(email, password, {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log('[Signup] Firebase user:', user);
+                await setDoc(doc(db, "users", user.uid), {
+                    uid: user.uid,
                     firstName,
                     lastName,
                     fullName: `${firstName} ${lastName}`,
+                    email,
                     phone,
                     location,
                     role,
-                    isActive: true
+                    createdAt: new Date()
                 });
-
-                alert('Account created successfully! Please log in.');
+                console.log('[Signup] User document created in Firestore:', email, role);
+                alert('Sign up successful! Please proceed to login.');
                 window.location.href = 'login.html';
             } catch (error) {
                 console.error('[Signup] Error:', error);
-                alert(`Registration failed: ${error.message}`);
-                if (loadingBtn) { loadingBtn.textContent = 'Create Account'; loadingBtn.disabled = false; }
+                alert(`Error: ${error.message}`);
             }
         });
     }
@@ -176,7 +164,7 @@ function initUserDashboard() {
             console.log('[UserDashboard] Firestore userData:', userData);
             storeUserInfo(userData); // Store in localStorage
             displayUserData(userData);
-            listenToObservationData();
+            listenToSensorData();
             setupLogout();
         } else {
             console.warn('[UserDashboard] User not found or not a farmer. Redirecting to login.');
@@ -190,8 +178,8 @@ function initUserDashboard() {
         if (welcomeEl) welcomeEl.textContent = `Welcome Back, ${userData.firstName}!`;
     };
 
-    const listenToObservationData = () => {
-        onValue(ref(realTimeDb, 'observations/latest'), (snapshot) => {
+    const listenToSensorData = () => {
+        onValue(ref(realTimeDb, 'sensorData/latest'), (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 const ph = document.getElementById('ph-value');
@@ -246,21 +234,9 @@ function initAdminDashboard() {
                 totalUsersCountEl.textContent = snapshot.size;
             }
             
-                usersTableBody.innerHTML = snapshot.docs.map(doc => {
+            usersTableBody.innerHTML = snapshot.docs.map(doc => {
                 const user = doc.data();
-                // createdAt may be a Firestore Timestamp, a Date, or a string
-                let regDate = 'N/A';
-                try {
-                    if (user.createdAt && typeof user.createdAt.toDate === 'function') {
-                        regDate = user.createdAt.toDate().toLocaleDateString();
-                    } else if (user.createdAt instanceof Date) {
-                        regDate = user.createdAt.toLocaleDateString();
-                    } else if (typeof user.createdAt === 'string') {
-                        regDate = new Date(user.createdAt).toLocaleDateString();
-                    }
-                } catch (err) {
-                    console.warn('Failed to parse createdAt for user', user, err);
-                }
+                const regDate = user.createdAt.toDate().toLocaleDateString();
                 return `
                     <tr>
                         <td>${user.fullName}</td>
@@ -312,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     datasets: [{
                         label: 'User Signups',
                         data: [12, 19, 3, 5, 2, 3],
-                        borderColor: '#388E3C',
+                        borderColor: '#4CAF50',
                         tension: 0.1
                     }]
                 }
@@ -328,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     datasets: [{
                         label: 'User Roles',
                         data: [300, 50],
-                        backgroundColor: ['#388E3C', '#EF6C00']
+                        backgroundColor: ['#4CAF50', '#FFC107']
                     }]
                 }
             });
@@ -336,56 +312,102 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Mobile Navigation Toggle (Enhanced) - Wait for DOM
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
+// Mobile Navigation Toggle
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
-    if (hamburger && navMenu) {
-        console.log('Hamburger menu elements found, setting up listeners...');
+console.log('[Mobile Nav] Elements found - hamburger:', hamburger, 'navMenu:', navMenu);
+
+if (hamburger && navMenu) {
+    // Initialize nav menu state for small screens
+    if (window.innerWidth <= 900) {
+        navMenu.setAttribute('aria-hidden', 'true');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    // Click toggle
+    hamburger.addEventListener('click', () => {
+        console.log('[Mobile Nav] Hamburger clicked');
+        const isActive = hamburger.classList.contains('active');
+        console.log('[Mobile Nav] Current state - isActive:', isActive);
         
-        hamburger.addEventListener('click', (e) => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        console.log('[Mobile Nav] After toggle - hamburger classes:', hamburger.className);
+        console.log('[Mobile Nav] After toggle - navMenu classes:', navMenu.className);
+        
+        if (!isActive) {
+            // Opening menu
+            console.log('[Mobile Nav] Opening menu');
+            navMenu.setAttribute('aria-hidden', 'false');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        } else {
+            // Closing menu
+            console.log('[Mobile Nav] Closing menu');
+            navMenu.setAttribute('aria-hidden', 'true');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+    });
+
+    // Keyboard toggle (Enter / Space)
+    hamburger.setAttribute('tabindex', '0');
+    hamburger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            e.stopPropagation();
-            
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            
-            console.log('Hamburger clicked, active classes:', {
-                hamburger: hamburger.classList.contains('active'),
-                navMenu: navMenu.classList.contains('active')
-            });
-            
-            // Prevent body scroll when menu is open
-            if (navMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        });
+            hamburger.click(); // Trigger the same logic as click
+        }
+    });
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            navMenu.setAttribute('aria-hidden', 'true');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // Restore scrolling
         });
+    });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    } else {
-        console.error('Hamburger menu elements not found:', {
-            hamburger: !!hamburger,
-            navMenu: !!navMenu
-        });
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 900 && 
+            !hamburger.contains(e.target) && 
+            !navMenu.contains(e.target) && 
+            navMenu.classList.contains('active')) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            navMenu.setAttribute('aria-hidden', 'true');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+    });
+}
+
+// Ensure responsive behavior on resize: enable/disable mobile nav and reset menu state
+let lastIsMobile = window.innerWidth <= 900;
+window.addEventListener('resize', () => {
+    const isMobile = window.innerWidth <= 900;
+    if (isMobile !== lastIsMobile) {
+        lastIsMobile = isMobile;
+        if (isMobile) {
+            // entering mobile: reset menu state
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            navMenu.setAttribute('aria-hidden', 'true');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // Restore scrolling
+        } else {
+            // leaving mobile: ensure menu is visible as normal desktop nav
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            navMenu.setAttribute('aria-hidden', 'false');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
     }
 });
 
@@ -517,114 +539,6 @@ window.addEventListener('load', () => {
     }
 });
 
-// Features Tab Functionality
-document.addEventListener('DOMContentLoaded', () => {
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabPanes = document.querySelectorAll('.tab-pane');
-    
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetTab = button.getAttribute('data-tab');
-            
-            // Remove active class from all buttons and panes
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabPanes.forEach(pane => pane.classList.remove('active'));
-            
-            // Add active class to clicked button and corresponding pane
-            button.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
-        });
-    });
-});
-
-// Hero Stats Animation
-document.addEventListener('DOMContentLoaded', () => {
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const statNumbers = entry.target.querySelectorAll('.stat strong');
-                statNumbers.forEach(stat => {
-                    const finalNumber = stat.textContent;
-                    const isPercentage = finalNumber.includes('%');
-                    const numericValue = parseInt(finalNumber);
-                    
-                    let currentValue = 0;
-                    const increment = numericValue / 50;
-                    
-                    const counter = setInterval(() => {
-                        currentValue += increment;
-                        if (currentValue >= numericValue) {
-                            stat.textContent = finalNumber;
-                            clearInterval(counter);
-                        } else {
-                            stat.textContent = Math.floor(currentValue) + (isPercentage ? '%' : '+');
-                        }
-                    }, 30);
-                });
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.7 });
-    
-    const heroStats = document.querySelector('.hero-stats');
-    if (heroStats) {
-        statsObserver.observe(heroStats);
-    }
-});
-
-// Enhanced Floating Cards Animation
-document.addEventListener('DOMContentLoaded', () => {
-    const floatingCards = document.querySelectorAll('.floating-card');
-    
-    floatingCards.forEach((card, index) => {
-        // Add random movement to make cards more dynamic
-        setInterval(() => {
-            const randomX = Math.random() * 4 - 2; // Random between -2 and 2
-            const randomY = Math.random() * 4 - 2;
-            card.style.transform += ` translate(${randomX}px, ${randomY}px)`;
-        }, 3000 + index * 500);
-    });
-});
-
-// Platform Access Section Animations
-document.addEventListener('DOMContentLoaded', () => {
-    const accessOptions = document.querySelectorAll('.access-option');
-    
-    accessOptions.forEach((option, index) => {
-        option.style.opacity = '0';
-        option.style.transform = 'translateY(30px)';
-        option.style.transition = 'all 0.6s ease';
-        
-        setTimeout(() => {
-            option.style.opacity = '1';
-            option.style.transform = 'translateY(0)';
-        }, index * 200);
-    });
-});
-
-// Steps Animation
-document.addEventListener('DOMContentLoaded', () => {
-    const steps = document.querySelectorAll('.step');
-    
-    const stepsObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0) scale(1)';
-                }, index * 200);
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    steps.forEach(step => {
-        step.style.opacity = '0';
-        step.style.transform = 'translateY(50px) scale(0.9)';
-        step.style.transition = 'all 0.6s ease';
-        stepsObserver.observe(step);
-    });
-});
-
 // Back to top button
 const backToTopBtn = document.createElement('button');
 backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
@@ -676,29 +590,3 @@ backToTopBtn.addEventListener('mouseleave', () => {
     backToTopBtn.style.transform = 'translateY(0)';
     backToTopBtn.style.boxShadow = 'var(--shadow)';
 }); 
-
-// Disable Facebook links/icons site-wide (keeps icon visible but non-functional)
-(function disableFacebookLinks() {
-    function disableAnchor(a) {
-        if (!a) return;
-        try {
-            a.dataset._href = a.getAttribute('href') || '';
-            a.setAttribute('href', 'javascript:void(0)');
-            a.setAttribute('aria-disabled', 'true');
-            a.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); });
-            a.classList.add('social-disabled');
-        } catch (err) {
-            console.warn('Failed to disable anchor', a, err);
-        }
-    }
-
-    // Disable anchors that link to facebook.com
-    document.querySelectorAll('a[href*="facebook.com"]').forEach(disableAnchor);
-
-    // Disable anchors that contain a FontAwesome facebook icon
-    document.querySelectorAll('a').forEach(a => {
-        if (a.querySelector('.fa-facebook-f, .fa-facebook')) {
-            disableAnchor(a);
-        }
-    });
-})();

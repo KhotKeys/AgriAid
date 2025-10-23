@@ -1,15 +1,5 @@
 /* frontend/admin-dashboard.css */
 
-/* Dashboard Logo */
-.dashboard-logo-img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    margin-right: 0.5rem;
-    border-radius: 4px;
-    vertical-align: middle;
-}
-
 /* Stats Section */
 .stats-grid {
     display: grid;

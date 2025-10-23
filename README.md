@@ -1,10 +1,10 @@
-# **Käkedom Tools - Empowering Refugee Farmers**
+# **AgriAid - Empowering Refugee Farmers**
 
-A **data-driven farming support system** designed specifically for the **Kiryandongo Refugee Camp** community. This project addresses the agricultural challenges faced by refugee farmers through **accessible technology** and **smart monitoring solutions**.
+A **data-driven farming support system** designed specifically for the **Rhino Refugee Camp** community. This project addresses the agricultural challenges faced by refugee farmers through **accessible technology** and **smart monitoring solutions**.
 
 ## 🌱 **Project Overview**
 
-Growing up in the refugee community, I witnessed the challenges farmers face in **Kiryandongo Refugee Camp**. Limited access to **soil health information**, **weather patterns**, and **farming knowledge** leads to low crop production and food insecurity. **Käkedom Tools** provides comprehensive solutions to these challenges.
+Growing up in the refugee community, I witnessed the challenges farmers face in **Rhino Refugee Camp**. Limited access to **soil health information**, **weather patterns**, and **farming knowledge** leads to low crop production and food insecurity. **AgriAid** provides comprehensive solutions to these challenges.
 
 ## 🎯 **Key Features**
 
@@ -56,8 +56,8 @@ Growing up in the refugee community, I witnessed the challenges farmers face in 
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/yourusername/kakedom-tools.git
-cd kakedom-tools
+git clone https://github.com/yourusername/agraid.git
+cd agraid
 ```
 
 2. **Open the project in your browser**:
@@ -88,17 +88,28 @@ python -m http.server 8000
 
 ### **Dashboards**
 
-* **User Dashboard** (`user-dashboard.html`): Farmer interface with IoT data
+* **User Dashboard** (`user-dashboard.html`): Farmer interface with community observations and learning tools
 * **Admin Dashboard** (`admin-dashboard.html`): System administration and analytics
 
 ## 🎨 **Design Features**
 
 ### **Color Scheme**
 
-* **Primary Green**: #2E7D32 (Deep forest green)
-* **Secondary Green**: #4CAF50 (Medium green)
-* **Light Green**: #81C784 (Light green)
-* **Dark Green**: #1B5E20 (Dark green)
+Organic Earth Palette (Local Farming / Community Platform)
+
+Use when: You focus on farmer collaboration, education, or sustainability.
+
+🌿 Primary: Forest Green #388E3C
+
+🧡 Accent: Burnt Orange #EF6C00
+
+🤎 Support: Soil Brown #6D4C41
+
+🌤 Secondary: Light Cream #FFF8E1
+
+⚪ Neutral: White #FFFFFF
+
+A warm, human-centered palette that reflects real soil and sunlight.
 * **Earth Brown**: #8D6E63 (Natural brown)
 
 ### **Responsive Design**
@@ -119,15 +130,15 @@ python -m http.server 8000
 
 ### **Key Features**
 
-* **Real-time IoT data simulation**
+* **Demo observation data simulation**
 * **Interactive charts and graphs**
 * **Form validation**
 * **Responsive navigation**
 * **Smooth animations**
 
-## 📊 **IoT Data Integration**
+## 📊 **Demo Observation Data**
 
-The system simulates **real-time data** from IoT sensors including:
+The project includes simulated observation data for demos including:
 
 * **Soil pH**: 6.0 - 7.5 range
 * **Soil Moisture**: 50% - 80% range
@@ -182,13 +193,13 @@ The system simulates **real-time data** from IoT sensors including:
 
 * **Backend API development**
 * **Database integration**
-* **Real IoT sensor connectivity**
+* **Demo sensor connectivity (optional for advanced setups)**
 * **Machine learning models**
 * **Cloud deployment**
 
 ## 🤝 **Contributing**
 
-We welcome contributions to improve **Käkedom Tools**:
+We welcome contributions to improve **AgriAid**:
 
 1. **Fork the repository**
 2. **Create a feature branch**
@@ -198,9 +209,9 @@ We welcome contributions to improve **Käkedom Tools**:
 
 ## 📞 **Contact**
 
-* **Email**: [info@kakedomtools.org](mailto:info@kakedomtools.org)
-* **Location**: **Kiryandongo Refugee Camp, Uganda**
-* **Project**: **Käkedom Tools - Empowering Refugee Farmers**
+* **Email**: [info@agriaid.org](mailto:info@agriaid.org)
+* **Location**: **Rhino Refugee Camp, Uganda**
+* **Project**: **AgriAid - Empowering Refugee Farmers**
 
 ## 📄 **License**
 
@@ -208,12 +219,13 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 
 ## 🙏 **Acknowledgments**
 
-* **Kiryandongo Refugee Camp community**
+* **Rhino Refugee Camp community**
 * **Local farmers and agricultural experts**
 * **Technology partners and supporters**
 * **Open source community**
 
+## Author: Monica Akoi
 ---
 
-**Käkedom Tools** - **Building a sustainable future for refugee farmers through technology and community support.**
+**AgriAid** - **Building a sustainable future for refugee farmers through technology and community support.**
 

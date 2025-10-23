@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Each user may read/write only their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Sensor data: only the authenticated owner may read/write sensor docs stored
+    // under /sensors/{userId}/{sensorDoc}
+    match /sensors/{userId}/{sensorDoc=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Public read-only collection (guides, static content)
+    match /publicInfo/{doc=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Predictions stored per-user
+    match /predictions/{userId}/{doc=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Default: deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

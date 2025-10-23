@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Auth + Firestore Test</title>
+    <style>
+      body { font-family: system-ui, Arial; padding: 20px; }
+      button { margin: 6px 0; padding: 8px 12px; }
+      pre { background:#f6f6f6; padding:12px; border-radius:6px; max-width:900px; overflow:auto }
+    </style>
+  </head>
+  <body>
+    <h1>Auth + Firestore Quick Test</h1>
+    <p>This page uses the project's <code>auth-service.js</code> to create a test user, login, and verify the <code>users/{uid}</code> document exists.</p>
+
+    <div>
+      <label>Test email: <input id="testEmail" type="email" /></label>
+    </div>
+    <div>
+      <label>Test password: <input id="testPass" type="password" value="Test123!" /></label>
+    </div>
+    <div>
+      <button id="btnCreate">Create test user & write profile</button>
+      <button id="btnLogin">Login test user</button>
+      <button id="btnGetProfile">Get current profile</button>
+    </div>
+
+    <h3>Output</h3>
+    <pre id="out">Ready.</pre>
+
+    <script type="module">
+      import { signupWithProfile, loginWithEmail, getUserProfile } from './auth-service.js';
+
+      const out = document.getElementById('out');
+      const emailInput = document.getElementById('testEmail');
+      const passInput = document.getElementById('testPass');
+
+      function log(msg) {
+        const time = new Date().toLocaleTimeString();
+        out.textContent = `[${time}] ${msg}\n` + out.textContent;
+        console.log(msg);
+      }
+
+      // Show the configured Firebase projectId so we can confirm the client is pointing at the correct project
+      (async function showProjectId() {
+        try {
+          const cfg = await import('./firebase-config.js');
+          const projectId = cfg?.app?.options?.projectId || 'unknown';
+          log('Using Firebase projectId: ' + projectId);
+        } catch (err) {
+          log('Could not read firebase-config.js: ' + err.message);
+        }
+      })();
+
+      document.getElementById('btnCreate').addEventListener('click', async () => {
+        const email = emailInput.value || `test+${Date.now()}@example.com`;
+        const password = passInput.value || 'Test123!';
+        try {
+          log('Creating user: ' + email);
+          const profile = { displayName: 'Test User', role: 'user', createdAt: null };
+          const result = await signupWithProfile(email, password, profile);
+          log('Signup result: ' + JSON.stringify({ uid: result?.user?.uid, email: result?.user?.email }, null, 2));
+        } catch (err) {
+          // Provide detailed error information to diagnose permission or project issues
+          const code = err?.code || 'no-code';
+          const message = err?.message || String(err);
+          log(`Error during signup: [${code}] ${message}`);
+          try { console.error('Full error object:', err); } catch(e){}
+        }
+      });
+
+      document.getElementById('btnLogin').addEventListener('click', async () => {
+        const email = emailInput.value;
+        const password = passInput.value;
+        if (!email) return log('Please provide an email to login.');
+        try {
+          log('Logging in: ' + email);
+          const user = await loginWithEmail(email, password);
+          log('Logged in user uid: ' + user.uid + ' (email: ' + (user.email || '') + ')');
+        } catch (err) {
+          const code = err?.code || 'no-code';
+          const message = err?.message || String(err);
+          log(`Login error: [${code}] ${message}`);
+          try { console.error('Full error object:', err); } catch(e){}
+        }
+      });
+
+      document.getElementById('btnGetProfile').addEventListener('click', async () => {
+        try {
+          const cfg = await import('./firebase-config.js');
+          const uid = cfg.auth.currentUser?.uid;
+          if (!uid) return log('No logged in user.');
+          const profile = await getUserProfile(uid);
+          log('Profile for ' + uid + ': ' + JSON.stringify(profile, null, 2));
+        } catch (err) {
+          const code = err?.code || 'no-code';
+          const message = err?.message || String(err);
+          log(`Get profile error: [${code}] ${message}`);
+          try { console.error('Full error object:', err); } catch(e){}
+        }
+      });
+    </script>
+  </body>
+</html>

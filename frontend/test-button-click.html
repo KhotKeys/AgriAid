@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click Test - AgriAid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background: #388E3C;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .test-btn:hover {
+            background: #2E7D32;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background: #e8f5e8;
+            border-left: 4px solid #388E3C;
+        }
+        .flow-step {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .flow-step h4 {
+            color: #388E3C;
+            margin-top: 0;
+        }
+        .back-home {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #666;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .console-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-home">← Back to Home</a>
+
+    <div class="test-container">
+        <h1>🔘 Button Click Test</h1>
+        
+        <div class="status">
+            <h3>✅ FIXED: Logout Button Paths and Functionality</h3>
+            <p>The logout button has been fixed with proper paths and immediate click handlers to ensure it's functional.</p>
+        </div>
+
+        <div class="flow-step">
+            <h4>🔧 What Was Fixed</h4>
+            <ul>
+                <li>✅ <strong>Immediate Click Handler:</strong> Added instant click handler for testing</li>
+                <li>✅ <strong>Debug Logging:</strong> Added detailed console logging</li>
+                <li>✅ <strong>Path Verification:</strong> Verified all file paths are correct</li>
+                <li>✅ <strong>CSS Styles:</strong> Confirmed logout button styles are loaded</li>
+                <li>✅ <strong>DOM Detection:</strong> Added immediate DOM element detection</li>
+            </ul>
+        </div>
+
+        <div class="flow-step">
+            <h4>📋 Test the Logout Button</h4>
+            <ol>
+                <li><strong>Open Browser Console:</strong>
+                    <ul>
+                        <li>Press F12 or right-click → Inspect → Console</li>
+                        <li>Look for debug messages about the logout button</li>
+                    </ul>
+                </li>
+                <li><strong>Test Dashboard:</strong>
+                    <ul>
+                        <li>Click "Test Dashboard" below</li>
+                        <li>Check console for: "✅ Logout button found in DOM"</li>
+                        <li>Check console for: "✅ Immediate logout handler added"</li>
+                    </ul>
+                </li>
+                <li><strong>Test Logout Click:</strong>
+                    <ul>
+                        <li>Click the logout button in the dashboard</li>
+                        <li>Should see: "🔓 IMMEDIATE LOGOUT CLICKED!" in console</li>
+                        <li>Should show alert: "Logging out..."</li>
+                        <li>Should redirect to login page</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="flow-step">
+            <h4>🔗 Test Links</h4>
+            <a href="user-dashboard.html" class="test-btn">Test Dashboard</a>
+            <a href="login.html" class="test-btn">Test Login</a>
+        </div>
+
+        <div class="flow-step">
+            <h4>🔍 Console Output to Look For</h4>
+            <div class="console-output">
+📄 DOM loaded, initializing dashboard...<br>
+🔍 Checking for logout button...<br>
+✅ Logout button found in DOM<br>
+🔍 Button element: &lt;button class="btn btn-logout" id="logout-btn"&gt;<br>
+🔍 Button classes: btn btn-logout<br>
+🔍 Button style: flex<br>
+✅ Immediate logout handler added<br>
+🚀 Starting dashboard initialization...<br>
+✅ Firebase already initialized<br>
+🔐 Auth object: true<br>
+🗄️ Firestore object: true<br>
+🚪 Setting up logout functionality...<br>
+✅ Logout button found, adding event listener<br>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <h4>🎯 Expected Behavior</h4>
+            <ul>
+                <li>✅ <strong>Button Visible:</strong> Logout button should be visible in top-right</li>
+                <li>✅ <strong>Button Clickable:</strong> Button should respond to clicks</li>
+                <li>✅ <strong>Console Logs:</strong> Should see debug messages in console</li>
+                <li>✅ <strong>Immediate Response:</strong> Click should trigger immediately</li>
+                <li>✅ <strong>Alert Message:</strong> Should show "Logging out..." alert</li>
+                <li>✅ <strong>Redirect:</strong> Should redirect to login page</li>
+            </ul>
+        </div>
+
+        <div class="flow-step">
+            <h4>🚨 If Button Still Not Working</h4>
+            <ul>
+                <li>❌ <strong>Check Console:</strong> Look for JavaScript errors</li>
+                <li>❌ <strong>Check Network:</strong> Ensure all files are loading</li>
+                <li>❌ <strong>Check Paths:</strong> Verify file paths are correct</li>
+                <li>❌ <strong>Try Different Browser:</strong> Test in Chrome, Firefox, etc.</li>
+                <li>❌ <strong>Clear Cache:</strong> Clear browser cache and reload</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

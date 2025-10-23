@@ -1,0 +1,22 @@
+{
+  "name": "agriaid-frontend",
+  "version": "1.0.0",
+  "description": "AgriAid Frontend Application",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
+  },
+  "dependencies": {
+    "firebase": "^10.14.1"
+  },
+  "keywords": [
+    "farming",
+    "agriculture",
+    "firebase",
+    "web-app"
+  ],
+  "author": "AgriAid Team",
+  "license": "MIT"
+}

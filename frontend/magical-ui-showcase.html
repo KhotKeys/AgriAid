@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Magical UI Showcase - AgriAid</title>
+    <link rel="icon" type="image/png" href="images/Logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .showcase-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+        }
+        
+        .showcase-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient-magical);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(46, 125, 50, 0.5);
+        }
+        
+        .showcase-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+        
+        .magical-badge {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--gradient-magical);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(46, 125, 50, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .showcase-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 0 20px rgba(46, 125, 50, 0.2);
+        }
+        
+        .showcase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-magical);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .showcase-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 30px rgba(46, 125, 50, 0.4);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .showcase-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .showcase-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .showcase-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .showcase-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-magical);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+        }
+        
+        .back-home {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .back-home:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        
+        <div class="showcase-header">
+            <h1 class="showcase-title">✨ Magical UI Transformation ✨</h1>
+            <p class="showcase-subtitle">Experience the new magical design of AgriAid</p>
+            <div class="magical-badge">🎨 UI Magic Applied!</div>
+        </div>
+        
+        <div class="showcase-grid">
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>Magical Colors</h3>
+                <p>New vibrant color palette with magical gradients and animated backgrounds</p>
+                <ul class="feature-list">
+                    <li>Animated gradient backgrounds</li>
+                    <li>Magical color combinations</li>
+                    <li>Glowing effects and shadows</li>
+                    <li>Glass morphism design</li>
+                </ul>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Enchanted Buttons</h3>
+                <p>Interactive buttons with magical hover effects and smooth animations</p>
+                <ul class="feature-list">
+                    <li>Shimmer effects on hover</li>
+                    <li>3D transform animations</li>
+                    <li>Glowing shadows</li>
+                    <li>Smooth cubic-bezier transitions</li>
+                </ul>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3>Glass Cards</h3>
+                <p>Beautiful glass morphism cards with backdrop blur and magical effects</p>
+                <ul class="feature-list">
+                    <li>Backdrop blur effects</li>
+                    <li>Transparent backgrounds</li>
+                    <li>Hover animations</li>
+                    <li>Magical gradient overlays</li>
+                </ul>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <i class="fas fa-sparkles"></i>
+                </div>
+                <h3>Navigation Magic</h3>
+                <p>Enhanced navigation with glass effects and smooth transitions</p>
+                <ul class="feature-list">
+                    <li>Glass morphism navbar</li>
+                    <li>Hover glow effects</li>
+                    <li>Smooth transitions</li>
+                    <li>Enhanced blur effects</li>
+                </ul>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Animations</h3>
+                <p>Smooth and magical animations throughout the interface</p>
+                <ul class="feature-list">
+                    <li>Animated background gradients</li>
+                    <li>Hover scale effects</li>
+                    <li>Shimmer animations</li>
+                    <li>Pulse effects</li>
+                </ul>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Responsive Design</h3>
+                <p>Beautiful design that works perfectly on all devices</p>
+                <ul class="feature-list">
+                    <li>Mobile-first approach</li>
+                    <li>Flexible grid layouts</li>
+                    <li>Touch-friendly interactions</li>
+                    <li>Optimized for all screens</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 4rem;">
+            <a href="index.html" class="btn-primary" style="margin-right: 1rem;">
+                <i class="fas fa-home"></i> Explore Homepage
+            </a>
+            <a href="login.html" class="btn-secondary">
+                <i class="fas fa-sign-in-alt"></i> Try Login
+            </a>
+        </div>
+    </div>
+</body>
+</html>

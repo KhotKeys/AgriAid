@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test - AgriAid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .test-section h3 {
+            color: #388E3C;
+            margin-top: 0;
+        }
+        .test-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .test-link {
+            display: block;
+            padding: 12px 20px;
+            background: #388E3C;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #2E7D32;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background: #e8f5e8;
+            border-left: 4px solid #388E3C;
+        }
+        .back-home {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #666;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-home">← Back to Home</a>
+
+    <div class="test-container">
+        <h1>🧭 Navigation Test Page</h1>
+        
+        <div class="status">
+            <h3>✅ Navigation Links Updated</h3>
+            <p>All navigation links in index.html have been updated to point to the correct pages:</p>
+            <ul>
+                <li>✅ Main navigation menu links fixed</li>
+                <li>✅ Footer Quick Links updated</li>
+                <li>✅ Footer Smart Tools links updated</li>
+                <li>✅ Feature section buttons updated</li>
+                <li>✅ Hero section buttons working</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Authentication Pages</h3>
+            <div class="test-links">
+                <a href="signup.html" class="test-link">Signup Page</a>
+                <a href="login.html" class="test-link">Login Page</a>
+                <a href="user-dashboard.html" class="test-link">User Dashboard</a>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📚 Learning & Resources</h3>
+            <div class="test-links">
+                <a href="learning.html" class="test-link">Learning Platform</a>
+                <a href="resource-sharing.html" class="test-link">Resource Sharing</a>
+                <a href="about-us.html" class="test-link">About Us</a>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🛠️ Smart Tools</h3>
+            <div class="test-links">
+                <a href="soil-monitoring.html" class="test-link">Soil Monitoring</a>
+                <a href="yield-prediction.html" class="test-link">Yield Prediction</a>
+                <a href="water-management.html" class="test-link">Water Management</a>
+                <a href="seed-bank.html" class="test-link">Seed Bank</a>
+                <a href="weather.html" class="test-link">Weather</a>
+                <a href="farming-tools.html" class="test-link">Farming Tools</a>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 Test Instructions</h3>
+            <ol>
+                <li><strong>Test Authentication Flow:</strong>
+                    <ul>
+                        <li>Click "Signup Page" → Should work without refresh</li>
+                        <li>Create a test account → Should redirect to login</li>
+                        <li>Click "Login Page" → Should work without refresh</li>
+                        <li>Login with test account → Should redirect to dashboard</li>
+                    </ul>
+                </li>
+                <li><strong>Test Navigation:</strong>
+                    <ul>
+                        <li>Go back to index.html</li>
+                        <li>Click all navigation links</li>
+                        <li>Verify they go to correct pages</li>
+                        <li>Test both desktop and mobile navigation</li>
+                    </ul>
+                </li>
+                <li><strong>Test Footer Links:</strong>
+                    <ul>
+                        <li>Scroll to footer on index.html</li>
+                        <li>Click all footer links</li>
+                        <li>Verify they work correctly</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 What's Fixed</h3>
+            <ul>
+                <li>✅ <strong>Main Navigation:</strong> Learning → learning.html, Resources → resource-sharing.html</li>
+                <li>✅ <strong>Footer Quick Links:</strong> All links point to correct pages</li>
+                <li>✅ <strong>Footer Smart Tools:</strong> Each tool links to its specific page</li>
+                <li>✅ <strong>Feature Buttons:</strong> "View Live Dashboard" → soil-monitoring.html</li>
+                <li>✅ <strong>Feature Buttons:</strong> "Start Learning" → learning.html</li>
+                <li>✅ <strong>Hero Buttons:</strong> "Start Farming Smart" → signup.html</li>
+                <li>✅ <strong>Platform Access:</strong> Create Account → signup.html, Login Now → login.html</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

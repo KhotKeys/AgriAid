@@ -1,20 +1,44 @@
-import { auth, db, realTimeDb } from './firebase-config.js';
-import {
+// Import Firebase
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { 
+    getAuth, 
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
     signOut,
     setPersistence,
     browserLocalPersistence
-} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-import {
+} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+import { 
+    getFirestore,
     doc,
     setDoc,
     getDoc,
     collection,
     onSnapshot
-} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-import { ref, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+import { 
+    getDatabase,
+    ref, 
+    onValue 
+} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js';
+
+// Firebase configuration (same as login.html)
+const firebaseConfig = {
+    apiKey: "AIzaSyAtFuLj86FT3Xe3zOkfZz45nQ-HaICG1l8",
+    authDomain: "agriaid-6ad0b.firebaseapp.com",
+    projectId: "agriaid-6ad0b",
+    storageBucket: "agriaid-6ad0b.firebasestorage.app",
+    messagingSenderId: "529552760039",
+    appId: "1:529552760039:web:461d55da50b1d623f85642",
+    measurementId: "G-HHV5BDNDHD"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const realTimeDb = getDatabase(app);
 
 const currentPath = window.location.pathname;
 

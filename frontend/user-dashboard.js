@@ -1,6 +1,23 @@
-import { auth, db } from './firebase-config.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+// Import Firebase
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+// Firebase configuration (same as login.html)
+const firebaseConfig = {
+    apiKey: "AIzaSyAtFuLj86FT3Xe3zOkfZz45nQ-HaICG1l8",
+    authDomain: "agriaid-6ad0b.firebaseapp.com",
+    projectId: "agriaid-6ad0b",
+    storageBucket: "agriaid-6ad0b.firebasestorage.app",
+    messagingSenderId: "529552760039",
+    appId: "1:529552760039:web:461d55da50b1d623f85642",
+    measurementId: "G-HHV5BDNDHD"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 const DEFAULT_AVATAR = './images/africa_numbers_cover.jpg'; // Updated default image for all users
 
@@ -42,6 +59,14 @@ function setupLogout() {
     if (logoutButton) {
         logoutButton.addEventListener('click', async (e) => {
             e.preventDefault();
+            try {
+                // Import signOut function
+                const { signOut } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js');
+                await signOut(auth);
+                console.log('User signed out successfully');
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
             localStorage.clear();
             window.location.href = 'login.html';
         });
@@ -91,12 +116,34 @@ async function fetchAndDisplayUserInfo(user) {
 // Always fetch fresh user info on each login
 
 document.addEventListener('DOMContentLoaded', () => {
+    let authChecked = false;
+    
     onAuthStateChanged(auth, (user) => {
-        if (user) {
-            fetchAndDisplayUserInfo(user);
-        } else {
-            window.location.href = 'login.html';
+        if (!authChecked) {
+            authChecked = true;
+            
+            if (user) {
+                console.log('User authenticated:', user.email);
+                fetchAndDisplayUserInfo(user);
+            } else {
+                console.log('No user authenticated, redirecting to login');
+                // Check if we have user data in localStorage as fallback
+                const storedUser = localStorage.getItem('sf_user');
+                if (storedUser) {
+                    try {
+                        const userData = JSON.parse(storedUser);
+                        console.log('Using stored user data:', userData);
+                        updateUserInfoDisplay(userData);
+                        return; // Don't redirect if we have valid stored data
+                    } catch (e) {
+                        console.error('Invalid stored user data:', e);
+                        localStorage.removeItem('sf_user');
+                    }
+                }
+                window.location.href = 'login.html';
+            }
         }
     });
+    
     setupLogout();
 }); 

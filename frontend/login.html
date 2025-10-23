@@ -145,6 +145,39 @@
             background: #d4edda;
             color: #155724;
         }
+
+        .info-message {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .dashboard-link {
+            display: inline-block;
+            background: #388E3C;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .dashboard-link:hover {
+            background: #2E7D32;
+            color: white;
+        }
+
+        .info-message p {
+            margin: 0 0 10px 0;
+            font-weight: 500;
+        }
+
+        .info-message .dashboard-link {
+            margin: 5px 10px 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -164,6 +197,14 @@
 
             <div class="message error-message" id="errorMessage"></div>
             <div class="message success-message" id="successMessage"></div>
+            <div class="message info-message" id="alreadyLoggedInMessage" style="display: none;">
+                <p>Welcome back! You are already logged in.</p>
+                <div style="margin-top: 10px;">
+                    <a href="user-dashboard.html" class="dashboard-link" id="userDashboardLink" style="display: none;">Go to User Dashboard</a>
+                    <a href="admin-dashboard.html" class="dashboard-link" id="adminDashboardLink" style="display: none;">Go to Admin Dashboard</a>
+                </div>
+                <p style="margin-top: 15px;">Don't have another account? <a href="signup.html" class="dashboard-link">Create a new account</a></p>
+            </div>
 
             <form class="auth-form" id="loginForm">
                 <div class="form-group">
@@ -231,13 +272,58 @@
         function hideMessages() {
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
+            const alreadyLoggedInMessage = document.getElementById('alreadyLoggedInMessage');
+            if (alreadyLoggedInMessage) {
+                alreadyLoggedInMessage.style.display = 'none';
+            }
         }
 
         // Check if user is already logged in (but don't auto-redirect)
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log('User already logged in:', user.email);
-                // Don't auto-redirect, let user choose to login again or go to dashboard
+                // Show info message with dashboard links
+                const alreadyLoggedInMessage = document.getElementById('alreadyLoggedInMessage');
+                const userDashboardLink = document.getElementById('userDashboardLink');
+                const adminDashboardLink = document.getElementById('adminDashboardLink');
+                
+                // Check user role from localStorage
+                const storedUser = localStorage.getItem('sf_user');
+                if (storedUser) {
+                    try {
+                        const userData = JSON.parse(storedUser);
+                        if (userData.role === 'admin') {
+                            adminDashboardLink.style.display = 'inline-block';
+                        } else {
+                            userDashboardLink.style.display = 'inline-block';
+                        }
+                    } catch (e) {
+                        // Default to user dashboard if role can't be determined
+                        userDashboardLink.style.display = 'inline-block';
+                    }
+                } else {
+                    // Default to user dashboard if no stored data
+                    userDashboardLink.style.display = 'inline-block';
+                }
+                
+                alreadyLoggedInMessage.style.display = 'block';
+                
+                // Optionally hide the login form for better UX
+                const loginForm = document.getElementById('loginForm');
+                if (loginForm) {
+                    loginForm.style.opacity = '0.6';
+                }
+            } else {
+                // Hide the already logged in message if user is not logged in
+                const alreadyLoggedInMessage = document.getElementById('alreadyLoggedInMessage');
+                const loginForm = document.getElementById('loginForm');
+                
+                if (alreadyLoggedInMessage) {
+                    alreadyLoggedInMessage.style.display = 'none';
+                }
+                if (loginForm) {
+                    loginForm.style.opacity = '1';
+                }
             }
         });
 
@@ -293,9 +379,13 @@
                 // Success
                 showSuccess('Login successful! Redirecting to dashboard...');
                 
-                // Redirect to dashboard after 2 seconds
+                // Redirect to appropriate dashboard based on user role
                 setTimeout(() => {
-                    window.location.href = 'user-dashboard.html';
+                    if (userProfile && userProfile.role === 'admin') {
+                        window.location.href = 'admin-dashboard.html';
+                    } else {
+                        window.location.href = 'user-dashboard.html';
+                    }
                 }, 2000);
 
             } catch (error) {
